@@ -1,46 +1,57 @@
-import React,{useState,useEffect} from "react";
+import React, { useReducer, useState } from "react";
 
 
 export default function App() {
-  const [isActive, setIsActive] = useState(false);
-  const [isStopped, setIsStopped] = useState(true);
-  const [time, setTime] = useState(0);
-  
-  useEffect(() => {
-      let interval = null;
-    if (isActive && isStopped === false) {
-      interval = setInterval(() => {
-        setTime((time) => time + 1);
-      }, 1000);
-    } else {
-      clearInterval(interval);
+  const [desc, setDesc] = useState('')
+  const itemReducer = (items, action) => {
+    switch (action.type) {
+      case "Add desc":
+        return [...items, newItem(action.payload.desc)]
+      case "delete desc":
+        return items.filter(item => item.id !== action.payload.id)
+      default:
+        return items
     }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [isActive, isStopped]);
-  
-  useEffect(() => {
-    console.log("timeout called")
-    const timeout = setTimeout(() => {
-      setIsActive(!isActive)
-      setTime(0);
-    }, 5000);
-    return () => {
-      clearTimeout(timeout)
+  }
+  const newItem = (desc) => {
+    return {
+      id: Date.now(),
+      desc: desc
     }
-  },[isActive])
-  const handleStart = () => {
-    setIsActive(true);
-    setIsStopped(false);
-  };
-  
-  const handlePauseResume = () => {
-    setIsStopped(!isStopped);
-  };
-  
-  return <div><h1 > {time} </h1>
-    <button onClick={handleStart} >start</button>  
-    <button onClick={handlePauseResume} >stop</button>  
+  }
+  const [items, dispatch] = useReducer(itemReducer, []);
+
+  const addBlock = (e) => {
+    e.preventDefault()
+    dispatch({
+      type: "Add desc",
+      payload: {
+        desc: desc
+      }
+    })
+    setDesc("")
+  }
+  console.log(items)
+  return (
+    <div>
+      <form>
+        <label>
+          description:
+          <input type="text"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        </label>
+        <button onClick={(e) => addBlock(e)}>add</button>
+      </form>
+      {items.map(item => {
+        return (
+          <div>
+            <h6>id: {item.id}</h6>
+            <h1>Desc: {item.desc}</h1>
+            <button onClick={() => dispatch({ type: "delete desc", payload: { id: item.id } })}>Delete</button>
+          </div>)
+      })}
     </div>
+  )
 }
