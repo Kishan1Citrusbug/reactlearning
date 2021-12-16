@@ -1,30 +1,49 @@
-import React  from 'react';
-import './App.css';
-import Dashboard from './components/dashboard';
-import Noauth from './components/noauth';
-import { BrowserRouter, Route, Routes,Link } from 'react-router-dom';
+import React, { useMemo, useState ,useEffect} from 'react';
 
-
-function App() {
-    return (
-      <div className="wrapper">
-        <h1>Hello</h1>
-        <BrowserRouter>
-        <nav>
-        <Link to="/noauth">Noauth</Link>
-        <br></br>
-        <Link to="/dashboard">Dashboard</Link>
-        </nav>
-          <Routes>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/noauth">
-                <Noauth/>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
+function factorial(n) {
+  if (n < 0) {
+    return -1;
   }
+  if (n === 0) {
+    return 1;
+  }
+  return n * factorial(n - 1);
+}
+
+const App = () => {
+  const [counter, setCounter] = useState(1);
+  const [efcounter,setEfcounter] = useState(1);
+  const [ans,setAns]=useState(null)
+  const result = useMemo(() => {
+      console.log('calculate', counter);
+      return factorial(counter);
+  }, [counter]);
+
+  useEffect(() => {
+    console.log("witout memo",efcounter)
+    if (efcounter < 0) {
+        setAns(-1);
+      }
+      if (efcounter === 0) {
+        setAns(1);
+      }
+      setAns(efcounter * factorial(efcounter - 1));
+    },[efcounter])
+  console.log('render', { counter });
+  return (
+    <div>
+      <div>Factorial of {counter} is: <span>{result}</span></div>
+      <div>
+        <button onClick={() => setCounter(counter - 1)}>-</button>
+        <button onClick={() => setCounter(counter + 1)}>+</button>
+      </div>
+      <div>(without memo)Factorial of {efcounter} is: <span>{ans}</span></div>
+      <div>
+        <button onClick={() => setEfcounter(efcounter - 1)}>-</button>
+        <button onClick={() => setEfcounter(efcounter + 1)}>+</button>
+      </div>
+    </div>
+  );
+};
+
 export default App;
