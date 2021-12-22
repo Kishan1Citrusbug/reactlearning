@@ -3,6 +3,7 @@ import axios from 'axios';
 import FetchemployeeList from './components/fetchemployee';
 import { Routes, Route,BrowserRouter } from 'react-router-dom';
 import SingleEmployee from './components/SingleEmployee';
+import EmployeeUpdate from './components/EmployeeUpdate';
 export const EmpContext = React.createContext()
 
 const initialState = {
@@ -41,24 +42,17 @@ const App = () => {
         .catch( err => {dispatch({type:"FETCH_ERROR"})})
     },[])
 
-    useEffect(()=>{
-      axios.get(`https://gorest.co.in/public/v1/users/${onSingle}`)
-      .then( resp => {singleDispatch({type:"FETCH_SUCCESS",payload:resp.data})})
-      // .then(resp => console.log(resp))
-      .catch( err => {singleDispatch({type:"FETCH_ERROR"})})
-    },[onSingle])
-
     const values={empState: state, empDispatch: dispatch , singleEmpState:singlestate,singleEmpDispatch:singleDispatch,
     empOnSingle:onSingle,empSetOnSingle:setOnsingle
     }
   return (
     <EmpContext.Provider value={values}>
-
     <div className='APP'>
       <BrowserRouter>
       <Routes>
       <Route path='/' element={<FetchemployeeList />} ></Route>
        <Route path='/detail' element={<SingleEmployee />} ></Route>
+       <Route path='/update/:id' element={<EmployeeUpdate />} ></Route>
       </Routes>
       </BrowserRouter>
     </div>

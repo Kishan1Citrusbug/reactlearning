@@ -9,7 +9,7 @@ const FetchemployeeList = () => {
         <div>
             <ul>
                 {empContext.empState.loading ? "Loading" : empContext.empState.data.data.map( d => (
-                    <li key={d.id}>{d.name}</li>
+                    <li key={d.id}><Link to={`/update/${d.id}`}>{d.name}</Link></li>
                 ))}
                 {empContext.empState.error ? empContext.empState.error : null}
             </ul>
