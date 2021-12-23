@@ -29,21 +29,21 @@ const reducer = (state,action) => {
       default:
           return state
   }
-
 }
 
 const App = () => {
   const [state,dispatch] = useReducer(reducer,initialState)
-  const [singlestate,singleDispatch] = useReducer(reducer, initialState)
-  const [onSingle,setOnsingle] = useState(0)  
+  const [update,updateDispatch] =  useReducer(reducer, initialState)
+  const [singleemp,singleEmpDispatch] =  useReducer(reducer, initialState)
+  const [onSingle,setOnsingle] = useState({})  
+
     useEffect(()=>{
         axios.get("https://gorest.co.in/public/v1/users")
         .then( resp => {dispatch({type:"FETCH_SUCCESS",payload:resp.data})})
         .catch( err => {dispatch({type:"FETCH_ERROR"})})
     },[])
 
-    const values={empState: state, empDispatch: dispatch , singleEmpState:singlestate,singleEmpDispatch:singleDispatch,
-    empOnSingle:onSingle,empSetOnSingle:setOnsingle
+    const values={ empState: state, empDispatch: dispatch ,empOnSingle:onSingle,empSetOnSingle:setOnsingle, updatestate:update,updDispatch:updateDispatch,semp:singleemp,sEmpDispatch:singleEmpDispatch
     }
   return (
     <EmpContext.Provider value={values}>
@@ -51,8 +51,8 @@ const App = () => {
       <BrowserRouter>
       <Routes>
       <Route path='/' element={<FetchemployeeList />} ></Route>
-       <Route path='/detail' element={<SingleEmployee />} ></Route>
-       <Route path='/update/:id' element={<EmployeeUpdate />} ></Route>
+       <Route path='/update/:userId' element={<EmployeeUpdate />} ></Route>
+       <Route path='/detail/:userId' element={<SingleEmployee />} ></Route>
       </Routes>
       </BrowserRouter>
     </div>

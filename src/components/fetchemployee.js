@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import { EmpContext } from '../App'
-import { Link } from 'react-router-dom'
+import { Link,Outlet } from 'react-router-dom'
 
 
 const FetchemployeeList = () => {
@@ -9,10 +9,11 @@ const FetchemployeeList = () => {
         <div>
             <ul>
                 {empContext.empState.loading ? "Loading" : empContext.empState.data.data.map( d => (
-                    <li key={d.id}><Link to={`/update/${d.id}`}>{d.name}</Link></li>
+                    <li><Link to={`/detail/${d.id}`} key={d.id}> {d.name}</Link></li>
                 ))}
                 {empContext.empState.error ? empContext.empState.error : null}
             </ul>
+            <Outlet/>
         </div>
     )
 }
