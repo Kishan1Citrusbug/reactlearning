@@ -1,18 +1,31 @@
 {
-  "name": "propimagecard",
+  "name": "react-stanard-structure",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.15.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.24.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "bootstrap": "^4.6.0",
+    "chroma-js": "^2.1.2",
+    "dotenv": "^10.0.0",
+    "flatpickr": "^4.6.9",
+    "hoist-non-react-statics": "^3.3.2",
+    "material-icons": "^1.10.6",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.6.4",
+    "react-datepicker": "^4.6.0",
     "react-dom": "^17.0.2",
-    "react-router": "^6.1.1",
-    "react-router-dom": "^6.0.0-beta.0",
+    "react-flatpickr": "^3.10.7",
+    "react-hot-toast": "^2.1.1",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
+    "react-select": "^5.1.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.4.1",
+    "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,5 +50,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.2.1",
+    "lint-staged": "^11.2.3",
+    "prettier": "^2.4.1"
   }
 }

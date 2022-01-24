@@ -1,63 +1,14 @@
-import React, {useEffect,useReducer, useState} from 'react';
-import axios from 'axios';
-import FetchemployeeList from './components/fetchemployee';
-import { Routes, Route,BrowserRouter } from 'react-router-dom';
-import SingleEmployee from './components/SingleEmployee';
-import EmployeeUpdate from './components/EmployeeUpdate';
-export const EmpContext = React.createContext()
+import React from 'react';
+import Routes from './Routes';
 
-const initialState = {
-  loading:true,
-  error:'',
-  data:null
-}
-
-const reducer = (state,action) => {
-  switch (action.type) {
-      case 'FETCH_SUCCESS':
-          return {
-          loading:false,
-          error:'',
-          data:action.payload
-          }
-      case 'FETCH_ERROR':
-          return{
-              loading:false,
-              error:'something went wrong',
-              data:null
-          }
-      default:
-          return state
-  }
-}
-
-const App = () => {
-  const [state,dispatch] = useReducer(reducer,initialState)
-  const [update,updateDispatch] =  useReducer(reducer, initialState)
-  const [singleemp,singleEmpDispatch] =  useReducer(reducer, initialState)
-  const [onSingle,setOnsingle] = useState({})  
-
-    useEffect(()=>{
-        axios.get("https://gorest.co.in/public/v1/users")
-        .then( resp => {dispatch({type:"FETCH_SUCCESS",payload:resp.data})})
-        .catch( err => {dispatch({type:"FETCH_ERROR"})})
-    },[])
-
-    const values={ empState: state, empDispatch: dispatch ,empOnSingle:onSingle,empSetOnSingle:setOnsingle, updatestate:update,updDispatch:updateDispatch,semp:singleemp,sEmpDispatch:singleEmpDispatch
-    }
+function App() {
   return (
-    <EmpContext.Provider value={values}>
-    <div className='APP'>
-      <BrowserRouter>
-      <Routes>
-      <Route path='/' element={<FetchemployeeList />} ></Route>
-       <Route path='/update/:userId' element={<EmployeeUpdate />} ></Route>
-       <Route path='/detail/:userId' element={<SingleEmployee />} ></Route>
-      </Routes>
-      </BrowserRouter>
+    <div>
+     
+      <Routes />
+     
     </div>
-    </EmpContext.Provider>
   );
-};
+}
 
 export default App;
